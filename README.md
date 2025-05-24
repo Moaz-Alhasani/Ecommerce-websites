@@ -48,6 +48,8 @@ npx prisma migrate dev --name init
 
 # Run the development server
 npm run dev
+----------------
+```
 
 ## 🔐 Security
  # Passwords are hashed using bcrypt
