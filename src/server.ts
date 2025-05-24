@@ -5,6 +5,8 @@ import { CustomError, IError } from "./globals/middlware/error.middlware";
 import { HTTB_STATUS } from './globals/constants/http';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import session from 'express-session';
+import passport from 'passport';
 
 class Server {
     private app: Application;
@@ -22,6 +24,14 @@ class Server {
 
     private setMiddleware() {
         this.app.use(express.json())
+        this.app.use(session({
+            secret: 'your-secret-key',  // ضع مفتاح سري قوي هنا
+            resave: false,
+            saveUninitialized: false,
+            cookie: { maxAge: 24 * 60 * 60 * 1000 }  // 1 يوم بالميلي ثانية
+        }));
+        this.app.use(passport.initialize())
+        this.app.use(passport.session())
         this.app.use(cookieParser())
         this.app.use('/upload', express.static(path.join(__dirname, '/upload')))
         this.app.use('/static', express.static('C:/Users/Lenovo/Desktop/our project/static'));
